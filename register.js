@@ -14,26 +14,48 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Alert on button click
-const submitbtn = document.getElementById('btn');
+// Reference to the form
+const form = document.getElementById("register-form");
 
-submitbtn.addEventListener("click", function(event) {
+form.addEventListener("submit", async function(event) {
     event.preventDefault();
-    
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
 
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      alert('Account created successfully!');
-      window.location.href = "home.html";
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(errorMessage);
-    });
+    const email = document.getElementById('register-email').value.trim();
+    const password = document.getElementById('register-password').value.trim();
+    const guardianNumber = document.getElementById("guardian-number").value.trim();
+
+    if (!email || !password || !guardianNumber) {
+        alert("All fields are required!");
+        return;
+    }
+
+    try {
+        // Step 1: Create Firebase User
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log("Firebase User Created:", user.uid);
+        alert("Account created successfully!");
+
+        // Step 2: Store Guardian Number in MongoDB
+        const response = await fetch("http://localhost:5000/api/guardian", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ guardianNumber }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("Guardian Number saved successfully!");
+            form.reset();
+            window.location.href = "home.html"; // Redirect after both steps are successful
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert(error.message || "An error occurred. Please try again.");
+    }
 });
