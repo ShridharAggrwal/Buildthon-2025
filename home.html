@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safety App - Home</title>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet">
+    <title>SafeGuard - Personal Safety Companion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "segoe ui", verdana, helvetica, arial, sans-serif;
-            font-size: 16px;
-            transition: all 500ms ease;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 300ms ease;
         }
         
         html, body {
-            display: grid;
-            height: 100%;
+            min-height: 100vh;
             width: 100%;
-            place-items: center;
-            background: -webkit-linear-gradient(right, #50912d, #f4f2f0, #e19523, #f7cc87);
+            background: linear-gradient(135deg, #1a75ff, #f4f2f0, #3498db, #a7d8ff);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: #333;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         ::selection {
-            background: #f5ba62;
+            background: #1a75ff;
             color: #fff;
         }
         
@@ -32,48 +39,70 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .container {
-            background-color: rgba(230, 133, 29, 0.9);
-            color: #000000;
-            text-align: center;
-            padding: 2em 2em 0.5em;
-            width: 90%;
-            margin: 2em auto;
-            border-radius: 5px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #333;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
         }
         
-        @media screen and (min-width: 900px) {
-            .container {
-                width: 80%;
-            }
+        header {
+            background: linear-gradient(90deg, #1a75ff, #3498db);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
         }
         
         header h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-            color: #000000;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
         
         header p {
-            color: #333;
-            margin-bottom: 1.5em;
+            opacity: 0.9;
+            font-size: 1.1rem;
         }
         
         .content-wrap {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .content-wrap {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .map-section {
+                grid-column: span 2;
+            }
+            
+            .sos-container {
+                grid-column: span 2;
+            }
         }
         
         .map-section {
             width: 100%;
-            height: 300px;
-            border-radius: 5px;
+            height: 350px;
+            border-radius: 15px;
             overflow: hidden;
-            margin-bottom: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
         
         #map {
@@ -81,215 +110,317 @@
             height: 100%;
         }
         
-        .form-group {
-            margin: 0.5em 0;
-            text-align: left;
-        }
-        
-        .form-group label {
-            display: block;
-            color: #000000;
-            text-align: left;
-            font-weight: 600;
-            margin-bottom: 0.5em;
-        }
-        
-        .form-group input {
-            display: block;
-            padding: 0.5em 0;
-            width: 100%;
-            margin-top: 0.5em;
-            margin-bottom: 0.5em;
-            background-color: inherit;
-            border: none;
-            border-bottom: 1px solid #555;
-            color: #333;
-        }
-        
-        .form-group input:focus {
-            background-color: #fff;
-            color: #000;
-            border: none;
-            padding: 1em 0.5em;
-            animation: pulse 1s infinite ease;
-        }
-        
-        button {
-            border: 1px solid #fff;
-            border-radius: 5px;
-            outline: none;
-            user-select: none;
-            color: #333;
-            font-weight: 800;
-            cursor: pointer;
-            padding: 1em;
-            background-color: rgba(255, 255, 255, 0.7);
-            width: 100%;
-            margin-top: 1em;
-            transition: all 300ms ease;
-        }
-        
-        button:hover, button:focus {
-            background-color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        .sos-container {
+            text-align: center;
+            margin: 1rem 0;
         }
         
         .sos-button {
-            background-color: #e7463a;
+            background: linear-gradient(135deg, #e7463a, #c62828);
             color: white;
-            font-size: 1.2em;
-            padding: 1.2em;
-            margin: 1em 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 1.2rem 2rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 15px rgba(198, 40, 40, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 0 auto;
         }
         
         .sos-button:hover {
-            background-color: #d62e21;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(198, 40, 40, 0.4);
+        }
+        
+        .sos-button:active {
+            transform: translateY(1px);
         }
         
         .status-message {
-            background-color: rgba(255, 255, 255, 0.8);
-            border: 1px solid #c8e6c9;
-            color: #2e7d32;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-left: 5px solid #1a75ff;
+            color: #1a75ff;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 1.5rem auto;
             text-align: center;
             display: none;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            font-weight: 500;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            0% { transform: translateY(-20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
         
         .panel {
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
         
         .panel h3 {
-            font-size: 1.2em;
-            margin-bottom: 1em;
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
             color: #333;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(26, 117, 255, 0.3);
+            padding-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .guardian-info {
-            margin-bottom: 15px;
+            margin-bottom: 1.2rem;
+            padding: 1rem;
+            background-color: rgba(26, 117, 255, 0.1);
+            border-radius: 10px;
         }
         
         .info-item {
-            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
         }
         
         .guardian-input {
             display: flex;
-            margin-top: 10px;
-            gap: 10px;
+            gap: 0.75rem;
+            margin-top: 0.75rem;
         }
         
-        .guardian-input input {
+        .guardian-input input, .directions-form input, .directions-form select {
             flex-grow: 1;
-            padding: 10px;
+            padding: 0.875rem 1rem;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 10px;
             outline: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
         
-        .guardian-input button {
-            padding: 10px 15px;
-            margin-top: 0;
-            width: auto;
+        .guardian-input input:focus, .directions-form input:focus, .directions-form select:focus {
+            border-color: #1a75ff;
+            box-shadow: 0 0 0 2px rgba(26, 117, 255, 0.2);
+        }
+        
+        .update-btn, .direction-btn {
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(90deg, #1a75ff, #5aacff);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(26, 117, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .update-btn:hover, .direction-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(26, 117, 255, 0.4);
+        }
+        
+        .update-btn:active, .direction-btn:active {
+            transform: translateY(1px);
         }
         
         .directions-form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-bottom: 15px;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
         
-        .directions-form input {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            outline: none;
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group label {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #555;
         }
         
         #directionsPanel {
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
-            padding: 10px;
-            background-color: white;
-            border-radius: 5px;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
             border: 1px solid #eee;
-            margin-top: 15px;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        #directionsPanel::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        #directionsPanel::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        #directionsPanel::-webkit-scrollbar-thumb {
+            background: #1a75ff;
+            border-radius: 10px;
+        }
+        
+        #directionsPanel::-webkit-scrollbar-thumb:hover {
+            background: #0050cc;
         }
         
         .footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 2em;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            padding-top: 1em;
+            padding: 1.5rem 2rem;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
         
         .footer a {
-            color: #333;
+            color: #555;
             text-decoration: none;
             font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .footer a:hover {
-            color: #000;
-            text-decoration: underline;
+            color: #1a75ff;
         }
         
-        /* New styles for Places Autocomplete */
+        /* Places Autocomplete styling */
         .pac-container {
             background-color: #fff;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-            border-radius: 5px;
-            font-family: "segoe ui", verdana, helvetica, arial, sans-serif;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
             z-index: 1000;
+            border: none;
+            overflow: hidden;
         }
         
         .pac-item {
-            padding: 10px;
+            padding: 12px 15px;
             cursor: pointer;
-            border-top: 1px solid #e6e6e6;
+            border-top: 1px solid #f5f5f5;
+            font-size: 14px;
         }
         
         .pac-item:hover {
-            background-color: #f5f5f5;
+            background-color: rgba(26, 117, 255, 0.1);
         }
         
+        .pac-item-selected, .pac-item-selected:hover {
+            background-color: rgba(26, 117, 255, 0.2);
+        }
+        
+        .pac-icon {
+            margin-right: 12px;
+        }
+        
+        .pac-item-query {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        /* Responsive adjustments */
         @media screen and (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
             .container {
-                width: 95%;
-                padding: 1.5em 1em;
+                border-radius: 15px;
+            }
+            
+            header {
+                padding: 1.5rem;
             }
             
             header h1 {
-                font-size: 2em;
+                font-size: 2rem;
+            }
+            
+            .content-wrap {
+                padding: 1.5rem;
+                gap: 1rem;
+            }
+            
+            .map-section {
+                height: 300px;
+            }
+            
+            .panel {
+                padding: 1.2rem;
             }
         }
         
         @media screen and (max-width: 480px) {
+            header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .content-wrap {
+                padding: 1rem;
+            }
+            
             .guardian-input {
                 flex-direction: column;
             }
             
-            .guardian-input button {
+            .update-btn, .direction-btn {
                 width: 100%;
             }
+            
+            .map-section {
+                height: 250px;
+            }
+        }
+        
+        /* Pulse animation for SOS button */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(231, 70, 58, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(231, 70, 58, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(231, 70, 58, 0);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Safety Dashboard</h1>
-            <p>Your personal safety companion</p>
+            <h1>SafeGuard</h1>
+            <p>Your personal safety companion, always by your side</p>
         </header>
         
         <div class="status-message" id="statusMessage">
@@ -301,13 +432,25 @@
                 <div id="map"></div>
             </div>
             
-            <button class="sos-button" id="sosButton">SEND SOS ALERT</button>
+            <div class="sos-container">
+                <button class="sos-button pulse" id="sosButton">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    SEND SOS ALERT
+                </button>
+            </div>
             
             <div class="panel">
-                <h3>Emergency Contact</h3>
+                <h3>
+                    <i class="fas fa-user-shield"></i>
+                    Emergency Contact
+                </h3>
                 <div class="guardian-info">
                     <div class="info-item">
-                        <strong>Guardian Phone:</strong> <span id="guardianPhone">Not set</span>
+                        <i class="fas fa-phone-alt" style="color: #1a75ff;"></i>
+                        <div>
+                            <div style="font-size: 0.85rem; color: #777;">Guardian Phone</div>
+                            <div style="font-weight: 600; font-size: 1.1rem;" id="guardianPhone">Not set</div>
+                        </div>
                     </div>
                 </div>
                 
@@ -315,13 +458,19 @@
                     <label for="newGuardianPhone">Update Guardian Number</label>
                     <div class="guardian-input">
                         <input type="tel" id="newGuardianPhone" placeholder="Enter guardian's phone number" />
-                        <button id="updateGuardianBtn">Update</button>
+                        <button class="update-btn" id="updateGuardianBtn">
+                            <i class="fas fa-save"></i>
+                            Update
+                        </button>
                     </div>
                 </div>
             </div>
             
             <div class="panel">
-                <h3>Get Directions</h3>
+                <h3>
+                    <i class="fas fa-route"></i>
+                    Get Directions
+                </h3>
                 <div class="directions-form">
                     <div class="form-group">
                         <label for="startPoint">Starting Location</label>
@@ -335,23 +484,34 @@
                     
                     <div class="form-group">
                         <label for="travelMode">Travel Mode</label>
-                        <select id="travelMode" class="form-control" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; outline: none;">
-                            <option value="WALKING">Walking</option>
-                            <option value="DRIVING">Driving</option>
-                            <option value="TRANSIT">Transit</option>
-                            <option value="BICYCLING">Bicycling</option>
+                        <select id="travelMode">
+                            <option value="WALKING">
+                                Walking
+                            </option>
+                            <option value="DRIVING">
+                                Driving
+                            </option>
+                            <option value="TRANSIT">
+                                Transit
+                            </option>
+                            <option value="BICYCLING">
+                                Bicycling
+                            </option>
                         </select>
                     </div>
                     
-                    <button id="getDirectionsBtn">Get Directions</button>
+                    <button class="direction-btn" id="getDirectionsBtn">
+                        <i class="fas fa-directions"></i>
+                        Get Directions
+                    </button>
                 </div>
                 <div id="directionsPanel"></div>
             </div>
         </div>
         
         <div class="footer">
-            <a href="#" id="help">Help</a>
-            <a href="#" id="signOut">Sign Out</a>
+            <a href="#" id="help"><i class="fas fa-question-circle"></i> Help</a>
+            <a href="#" id="signOut"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
         </div>
     </div>
 
@@ -372,12 +532,59 @@
                 center: currentPosition,
                 zoom: 15,
                 mapTypeControl: true,
-                fullscreenControl: true
+                fullscreenControl: true,
+                styles: [
+                    {
+                        "featureType": "administrative",
+                        "elementType": "labels.text.fill",
+                        "stylers": [{"color": "#444444"}]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "all",
+                        "stylers": [{"color": "#f2f2f2"}]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": [{"visibility": "off"}]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "all",
+                        "stylers": [{"saturation": -100}, {"lightness": 45}]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "all",
+                        "stylers": [{"visibility": "simplified"}]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.icon",
+                        "stylers": [{"visibility": "off"}]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "all",
+                        "stylers": [{"visibility": "off"}]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "all",
+                        "stylers": [{"color": "#1a75ff"}, {"visibility": "on"}]
+                    }
+                ]
             });
             
             // Create directions service and renderer
             directionsService = new google.maps.DirectionsService();
-            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer = new google.maps.DirectionsRenderer({
+                polylineOptions: {
+                    strokeColor: "#1a75ff",
+                    strokeWeight: 5
+                }
+            });
             directionsRenderer.setMap(map);
             directionsRenderer.setPanel(document.getElementById('directionsPanel'));
             
@@ -413,14 +620,28 @@
                             position: currentPosition,
                             map: map,
                             title: 'Your Location',
+                            animation: google.maps.Animation.DROP,
                             icon: {
                                 path: google.maps.SymbolPath.CIRCLE,
-                                scale: 10,
-                                fillColor: '#e19523',
+                                scale: 12,
+                                fillColor: '#1a75ff',
                                 fillOpacity: 1,
                                 strokeColor: '#ffffff',
-                                strokeWeight: 2
+                                strokeWeight: 3
                             }
+                        });
+                        
+                        // Add a pulsing circle around the user's location
+                        new google.maps.Circle({
+                            strokeColor: '#1a75ff',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#1a75ff',
+                            fillOpacity: 0.2,
+                            map: map,
+                            center: currentPosition,
+                            radius: 100,
+                            animation: google.maps.Animation.PULSE
                         });
                     },
                     function() {
@@ -441,7 +662,7 @@
                 ? 'Error: The Geolocation service failed.'
                 : 'Error: Your browser doesn\'t support geolocation.';
                 
-            alert(errorMessage);
+            showStatusMessage(errorMessage, 'error');
         }
         
         // Calculate and display route
@@ -451,7 +672,7 @@
             const travelMode = document.getElementById('travelMode').value;
             
             if (!endInput) {
-                alert('Please enter a destination');
+                showStatusMessage('Please enter a destination', 'error');
                 return;
             }
             
@@ -469,26 +690,62 @@
                         directionsRenderer.setDirections(response);
                         // Show the directions panel when directions are available
                         document.getElementById('directionsPanel').style.display = 'block';
+                        
+                        // Get route details
+                        const route = response.routes[0].legs[0];
+                        const destination = route.end_address.split(',')[0];
+                        
+                        // Show success message with route info
+                        showStatusMessage(`Directions to ${destination} found (${route.distance.text}, approx. ${route.duration.text})`, 'success');
                     } else {
-                        alert('Directions request failed due to ' + status);
+                        showStatusMessage('Directions request failed: ' + status, 'error');
                     }
                 }
             );
         }
         
+        // Show status message
+        function showStatusMessage(message, type = 'success') {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.textContent = message;
+            
+            if (type === 'error') {
+                statusMessage.style.backgroundColor = '#ffebee';
+                statusMessage.style.borderLeftColor = '#c62828';
+                statusMessage.style.color = '#c62828';
+            } else if (type === 'warning') {
+                statusMessage.style.backgroundColor = '#fff8e1';
+                statusMessage.style.borderLeftColor = '#ffa000';
+                statusMessage.style.color = '#ffa000';
+            } else {
+                statusMessage.style.backgroundColor = '#e8f5e9';
+                statusMessage.style.borderLeftColor = '#1a75ff';
+                statusMessage.style.color = '#1a75ff';
+            }
+            
+            statusMessage.style.display = 'block';
+            
+            // Auto-hide the message after 5 seconds
+            setTimeout(() => {
+                statusMessage.style.opacity = '0';
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                    statusMessage.style.opacity = '1';
+                }, 300);
+            }, 5000);
+        }
+        
         // SOS button handler
         document.getElementById('sosButton').addEventListener('click', function() {
-            const statusMessage = document.getElementById('statusMessage');
             const guardianPhone = document.getElementById('guardianPhone').textContent;
             
             if (guardianPhone === 'Not set') {
-                statusMessage.textContent = 'Please set a guardian phone number first.';
-                statusMessage.style.backgroundColor = '#ffebee';
-                statusMessage.style.borderColor = '#ffcdd2';
-                statusMessage.style.color = '#c62828';
-                statusMessage.style.display = 'block';
+                showStatusMessage('Please set a guardian phone number first.', 'error');
                 return;
             }
+            
+            // Add pressed effect to button
+            this.classList.add('pressed');
             
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
@@ -506,34 +763,26 @@
                         if (status === 'OK') {
                             if (results[0]) {
                                 const address = results[0].formatted_address;
-                                statusMessage.textContent = `SOS alert sent to ${guardianPhone} with your location: ${address}`;
+                                showStatusMessage(`SOS alert sent to ${guardianPhone} with your location: ${address}`, 'success');
                             } else {
-                                statusMessage.textContent = `SOS alert sent to ${guardianPhone} with your coordinates: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+                                showStatusMessage(`SOS alert sent to ${guardianPhone} with your coordinates: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`, 'success');
                             }
                         } else {
-                            statusMessage.textContent = `SOS alert sent to ${guardianPhone} with your coordinates: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+                            showStatusMessage(`SOS alert sent to ${guardianPhone} with your coordinates: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`, 'success');
                         }
-                        
-                        statusMessage.style.backgroundColor = '#e8f5e9';
-                        statusMessage.style.borderColor = '#c8e6c9';
-                        statusMessage.style.color = '#2e7d32';
-                        statusMessage.style.display = 'block';
                     });
                     
                 }, function() {
-                    statusMessage.textContent = 'Unable to get your location. Please enable location services.';
-                    statusMessage.style.backgroundColor = '#ffebee';
-                    statusMessage.style.borderColor = '#ffcdd2';
-                    statusMessage.style.color = '#c62828';
-                    statusMessage.style.display = 'block';
+                    showStatusMessage('Unable to get your location. Please enable location services.', 'error');
                 });
             } else {
-                statusMessage.textContent = 'Geolocation is not supported by this browser.';
-                statusMessage.style.backgroundColor = '#ffebee';
-                statusMessage.style.borderColor = '#ffcdd2';
-                statusMessage.style.color = '#c62828';
-                statusMessage.style.display = 'block';
+                showStatusMessage('Geolocation is not supported by this browser.', 'error');
             }
+            
+            // Remove pressed effect after animation
+            setTimeout(() => {
+                document.getElementById('sosButton').classList.remove('pressed');
+            }, 300);
         });
         
         // Update guardian button handler
@@ -549,19 +798,9 @@
                 // In a real app, you would save this to your database
                 console.log('Guardian phone updated to:', phoneNumber);
                 
-                const statusMessage = document.getElementById('statusMessage');
-                statusMessage.textContent = 'Guardian phone number updated successfully.';
-                statusMessage.style.backgroundColor = '#e8f5e9';
-                statusMessage.style.borderColor = '#c8e6c9';
-                statusMessage.style.color = '#2e7d32';
-                statusMessage.style.display = 'block';
-                
-                // Hide message after 3 seconds
-                setTimeout(() => {
-                    statusMessage.style.display = 'none';
-                }, 3000);
+                showStatusMessage('Guardian phone number updated successfully.', 'success');
             } else {
-                alert('Please enter a valid phone number');
+                showStatusMessage('Please enter a valid phone number', 'warning');
             }
         });
         
@@ -577,7 +816,18 @@
         // Help link handler
         document.getElementById('help').addEventListener('click', function(e) {
             e.preventDefault();
-            alert('In case of emergency:\n1. Add your guardian\'s phone number\n2. Press the SOS button\n3. Your location will be sent to your guardian\n\nTo get directions:\n1. Enter your destination in the search box\n2. Choose your preferred travel mode\n3. Click "Get Directions"');
+            const helpMessage = `
+                In case of emergency:
+                1. Add your guardian's phone number
+                2. Press the SOS button
+                3. Your location will be sent to your guardian
+                
+                To get directions:
+                1. Enter your destination in the search box
+                2. Choose your preferred travel mode
+                3. Click "Get Directions"
+            `;
+            alert(helpMessage);
         });
     </script>
     
@@ -585,8 +835,5 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAACbQ1b6V2A-ba6Q5ZSof9nbLhTVo0a4w&libraries=places&callback=initMap">
     </script>
-
-</script>
-
 </body>
 </html>
